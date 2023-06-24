@@ -24,4 +24,9 @@ public class AppDAOImpl implements AppDAO{
     public void save(Instructor theInstructor) {
         entityManager.persist(theInstructor);//this will also save the detail object because of CascadeType is ALL
     }
+
+    @Override
+    public Instructor findInstructorById(int theId) {
+        return entityManager.find(Instructor.class,theId);//Magic ORM Mapping: This will ALSO retrieve the instructor details object
+    }
 }
