@@ -2,6 +2,7 @@ package com.luv2code.cruddemo.dao;
 
 import com.luv2code.cruddemo.entity.Instructor;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -28,5 +29,15 @@ public class AppDAOImpl implements AppDAO{
     @Override
     public Instructor findInstructorById(int theId) {
         return entityManager.find(Instructor.class,theId);//Magic ORM Mapping: This will ALSO retrieve the instructor details object
+    }
+
+    @Override
+    @Transactional
+    public void deleteInstructorById(int theId) {
+        //retrieve the instructor
+        Instructor tempInstructor = entityManager.find(Instructor.class,theId);
+
+        //delete the instructor
+        entityManager.remove(tempInstructor);//MAGIC: this will ALSO delete the instructor details object because of CascadeType.ALL
     }
 }
